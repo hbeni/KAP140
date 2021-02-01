@@ -1718,10 +1718,6 @@ We have captured the localizer and the GS.
                     <property>autopilot/kap140/panel/nav-timer</property>
                     <value>1</value>
                 </less-than>
-                <equals>
-                    <property>instrumentation/nav-source/has-gs</property>
-                    <value>1</value>
-                </equals>
             </condition>
         </enable>
         <input>6</input>
@@ -1797,11 +1793,11 @@ We have captured the localizer and the GS.
                 </equals>
                 <less-than>
                     <property>instrumentation/nav-source/gs-needle-deflection</property>
-                    <value>0</value>
+                    <value>0.1</value>
                 </less-than>
                 <greater-than>
                     <property>instrumentation/nav-source/gs-needle-deflection</property>
-                    <value>-1</value>
+                    <value>-0.3</value>
                 </greater-than>
             </condition>
         </enable>
