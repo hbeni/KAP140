@@ -174,6 +174,21 @@ We have captured the localizer and the GS.
         </enable>
         <input>0</input>
         <output>autopilot/kap140/powered</output>
+    </filter>
+
+    <filter>
+        <name>cold state</name>
+        <type>gain</type>
+        <debug>false</debug>
+        <enable>
+            <condition>
+                <or>
+                    <not><property>autopilot/kap140/powered</property></not>
+                    <not><property>autopilot/kap140/serviceable</property></not>
+                </or>
+            </condition>
+        </enable>
+        <input>0</input>
         <output>autopilot/kap140/bad-condition</output>
         <output>autopilot/kap140/panel/state</output>
         <output>autopilot/kap140/panel/state-old</output>
@@ -192,8 +207,6 @@ We have captured the localizer and the GS.
         <output>autopilot/kap140/settings/ap-disc</output>
     </filter>
 
-
-
 <!-- reset default altitude if the AP has no power -->
     <filter>
         <name>default-altitude</name>
@@ -201,7 +214,7 @@ We have captured the localizer and the GS.
         <debug>false</debug>
         <enable>
             <condition>
-                <not><property>autopilot/kap140/powered</property></not>
+                <not><property>autopilot/kap140/panel/state</property></not>
             </condition>
         </enable>
         <input alias="../../params/default-altitude"/>
@@ -215,7 +228,7 @@ We have captured the localizer and the GS.
         <debug>false</debug>
         <enable>
             <condition>
-                <not><property>autopilot/kap140/powered</property></not>
+                <not><property>autopilot/kap140/panel/state</property></not>
                 <not><property alias="../../../../../params/baro-tied"/></not>
             </condition>
         </enable>
@@ -556,20 +569,18 @@ We have captured the localizer and the GS.
         <debug>false</debug>
         <enable>
             <condition>
-                <and>
-                    <equals>
-                        <property>autopilot/kap140/panel/state</property>
-                        <value>4</value>
-                    </equals>
-                    <equals>
-                        <property>autopilot/kap140/powered</property>
-                        <value>1</value>
-                    </equals>
-                    <greater-than>
-                        <property>autopilot/kap140/panel/button-baro</property>
-                        <value>0</value>
-                    </greater-than>
-                </and>
+                <equals>
+                    <property>autopilot/kap140/panel/state</property>
+                    <value>4</value>
+                </equals>
+                <equals>
+                    <property>autopilot/kap140/powered</property>
+                    <value>1</value>
+                </equals>
+                <greater-than>
+                    <property>autopilot/kap140/panel/button-baro</property>
+                    <value>0</value>
+                </greater-than>
             </condition>
         </enable>
         <input>5</input>
