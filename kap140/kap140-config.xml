@@ -64,7 +64,7 @@
 -->
     <gain-pitch>autopilot/kap140/config/gain-pitch</gain-pitch>
     <gain-roll>autopilot/kap140/config/gain-roll</gain-roll>
-    
+
   </params>
 
 </PropertyList>
