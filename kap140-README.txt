@@ -78,6 +78,16 @@ Include the KAP 140 in your aircraft:
       <target-altitude type="int">0</target-altitude>
       <target-pressure type="double">0.0</target-pressure>
       <target-roll-deg type="double">0.0</target-roll-deg>
+      <logic>
+        <roll-active type="bool">false</roll-active>
+        <hdg-active type="bool">false</hdg-active>
+        <nav-active type="bool">false</nav-active>
+        <apr-active type="bool">false</apr-active>
+        <rev-active type="bool">false</rev-active>
+        <pitch-active type="bool">false</pitch-active>
+        <alt-active type="bool">false</alt-active>
+        <gs-active type="bool">false</gs-active>
+      </logic>
     </internal>
     <kap140>
       <serviceable type="bool">true</serviceable>
@@ -86,12 +96,16 @@ Include the KAP 140 in your aircraft:
       <roll-axis-fail type="bool">false</roll-axis-fail>
       <pitch-axis-fail type="bool">false</pitch-axis-fail>
       <bad-condition type="bool">false</bad-condition>
+<!-- configure the KAP 140 as you like it, for description see kap140-config.xml -->
       <config>
         <model type="int">3</model>
         <power type="double">24.0</power>
         <hsi-installed type="bool">true</hsi-installed>
         <default-altitude type="int">4500</default-altitude>
         <baro-tied type="bool">true</baro-tied>
+        <gain-roll type="double">1.4</gain-roll>
+        <gain-pitch type="double">0.7</gain-pitch>
+        <autotrim-pitch type="bool">true</autotrim-pitch>
       </config>
       <panel>
         <state type="int">0</state>
@@ -131,6 +145,15 @@ Include the KAP 140 in your aircraft:
         <aileron-rate type="double">0.0</aileron-rate>
         <elevator type="double">0.0</elevator>
         <elevator-rate type="double">0.0</elevator-rate>
+        <roll-servo>
+          <serviceable type="bool">true</serviceable>
+        </roll-servo>
+        <pitch-servo>
+          <serviceable type="bool">true</serviceable>
+        </pitch-servo>
+        <elevator-trim-servo>
+          <serviceable type="bool">true</serviceable>
+        </elevator-trim-servo>
       </servo>
       <settings>
         <cws type="bool">false</cws>
@@ -188,6 +211,8 @@ Include the KAP 140 in your aircraft:
 <!-- nav-selector begin -->
     <nav-source>
       <selector type="int">0</selector>
+      <watchdog type="double">0.0</watchdog>
+      <signal-valid type="bool">false</signal-valid>
       <in-range type="bool">false</in-range>
       <from-flag type="bool">false</from-flag>
       <to-flag type="bool">false</to-flag>

@@ -1750,7 +1750,7 @@ We have captured the localizer and the GS.
                     <property>autopilot/kap140/settings/lateral-arm</property>
                     <value>6</value>
                 </less-than>
-                <property>instrumentation/nav-source/in-range</property>
+                <property>instrumentation/nav-source/signal-valid</property>
                 <less-than>
                     <expression>
                         <abs><property>instrumentation/nav-source/heading-needle-deflection-norm</property></abs>
@@ -1788,7 +1788,7 @@ We have captured the localizer and the GS.
                     <property>autopilot/kap140/panel/nav-timer</property>
                     <value>1</value>
                 </less-than>
-                <not><property>instrumentation/nav-source/in-range</property></not>
+                <not><property>instrumentation/nav-source/signal-valid</property></not>
             </condition>
         </enable>
         <input>sim/time/elapsed-sec</input>
@@ -1976,6 +1976,7 @@ We have captured the localizer and the GS.
         <debug>false</debug>
         <enable>
             <condition>
+                <property>instrumentation/nav-source/signal-valid</property>
                 <property>instrumentation/nav-source/gs-in-range</property>
                 <less-than>
                     <property>instrumentation/nav-source/gs-needle-deflection</property>
@@ -2007,6 +2008,7 @@ We have captured the localizer and the GS.
         <debug>false</debug>
         <enable>
             <condition>
+                <property>instrumentation/nav-source/signal-valid</property>
                 <property>instrumentation/nav-source/gs-in-range</property>
                 <greater-than>
                     <property>autopilot/kap140/panel/gs-timer</property>
@@ -2673,7 +2675,7 @@ We have captured the localizer and the GS.
                         <property>/autopilot/kap140/panel/nav-timer</property>
                         <value>1</value>
                     </less-than>
-                    <property>instrumentation/nav-source/in-range</property>
+                    <property>instrumentation/nav-source/signal-valid</property>
                 </and>
                 <and>
                     <not><property alias="../../../../../../params/hsi-installed" /></not>
@@ -2693,7 +2695,7 @@ We have captured the localizer and the GS.
                         <property>/autopilot/kap140/panel/hdg-timer</property>
                         <value>1</value>
                     </less-than>
-                    <property>instrumentation/nav-source/in-range</property>
+                    <property>instrumentation/nav-source/signal-valid</property>
                 </and>
             </or>
         </input>
@@ -2712,7 +2714,7 @@ We have captured the localizer and the GS.
                         <property>/autopilot/kap140/panel/nav-timer</property>
                         <value>1</value>
                     </less-than>
-                    <property>instrumentation/nav-source/in-range</property>
+                    <property>instrumentation/nav-source/signal-valid</property>
                 </and>
                 <and>
                     <not><property alias="../../../../../../params/hsi-installed" /></not>
@@ -2732,7 +2734,7 @@ We have captured the localizer and the GS.
                         <property>/autopilot/kap140/panel/hdg-timer</property>
                         <value>1</value>
                     </less-than>
-                    <property>instrumentation/nav-source/in-range</property>
+                    <property>instrumentation/nav-source/signal-valid</property>
                 </and>
             </or>
         </input>
@@ -2751,7 +2753,7 @@ We have captured the localizer and the GS.
                         <property>/autopilot/kap140/panel/nav-timer</property>
                         <value>1</value>
                     </less-than>
-                    <property>instrumentation/nav-source/in-range</property>
+                    <property>instrumentation/nav-source/signal-valid</property>
                 </and>
                 <and>
                     <not><property alias="../../../../../../params/hsi-installed" /></not>
@@ -2771,7 +2773,7 @@ We have captured the localizer and the GS.
                         <property>/autopilot/kap140/panel/hdg-timer</property>
                         <value>1</value>
                     </less-than>
-                    <property>instrumentation/nav-source/in-range</property>
+                    <property>instrumentation/nav-source/signal-valid</property>
                 </and>
             </or>
         </input>
