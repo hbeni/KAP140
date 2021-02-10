@@ -1757,6 +1757,10 @@ We have captured the localizer and the GS.
                     </expression>
                     <value>0.6</value>
                 </less-than>
+                <not-equals>
+                    <property>instrumentation/nav-source/heading-needle-deflection-norm</property>
+                    <value>0.0</value>
+                </not-equals>
             </condition>
         </enable>
         <input>
