@@ -378,44 +378,87 @@
 			<property>/autopilot/internal/target-altitude</property>
 			<live>1</live>
 		</text>
+		
+		<group>
+			<layout>hbox</layout>
+			<row>1</row>
+			<col>0</col>
+			<visible>
+				<or>
+					<property>/autopilot/kap140/pitch-axis-fail</property>
+					<property>/autopilot/kap140/roll-axis-fail</property>
+				</or>
+			</visible>
+			<text>
+				<row>0</row>
+				<col>0</col>
+				<label>P</label>
+				<color>
+					<red>0.95</red>
+					<green>0.05</green>
+					<blue>0.05</blue>
+				</color>
+				<visible>
+					<property>/autopilot/kap140/pitch-axis-fail</property>
+				</visible>
+			</text>
+			<text>
+				<row>0</row>
+				<col>1</col>
+				<label>R</label>
+				<color>
+					<red>0.95</red>
+					<green>0.05</green>
+					<blue>0.05</blue>
+				</color>
+				<visible>
+					<property>/autopilot/kap140/roll-axis-fail</property>
+				</visible>
+			</text>
+		</group>
+
 		<!-- if your KAP 140 can use different navigation sources
-			you can named it here
-		<text>
+			you can named it here -->
+		<group>
 			<row>1</row>
 			<col>0</col>
-			<label>NAV1</label>
 			<visible>
-				<equals>
-					<property>instrumentation/nav-source/selector</property>
-					<value>0</value>
-				</equals>
+				<not><property>/autopilot/kap140/pitch-axis-fail</property></not>
+				<not><property>/autopilot/kap140/roll-axis-fail</property></not>
+				<greater-than>
+					<property>/autopilot/kap140/panel/state</property>
+					<value>4</value>
+				</greater-than>
 			</visible>
-		</text>
-		
-		<text>
-			<row>1</row>
-			<col>0</col>
-			<label>NAV2</label>
-			<visible>
-				<equals>
-					<property>instrumentation/nav-source/selector</property>
-					<value>1</value>
-				</equals>
-			</visible>
-		</text>
-		
-		<text>
-			<row>1</row>
-			<col>0</col>
-			<label>GPSS</label>
-			<visible>
-				<equals>
-					<property>instrumentation/nav-source/selector</property>
-					<value>2</value>
-				</equals>
-			</visible>
-		</text>
-		-->
+			<text>
+				<label>NAV1</label>
+				<visible>
+					<equals>
+						<property>instrumentation/nav-source/selector</property>
+						<value>0</value>
+					</equals>
+				</visible>
+			</text>
+			<text>
+				<label>NAV2</label>
+				<visible>
+					<equals>
+						<property>instrumentation/nav-source/selector</property>
+						<value>1</value>
+					</equals>
+				</visible>
+			</text>
+			<text>
+				<label>GPSS</label>
+				<visible>
+					<equals>
+						<property>instrumentation/nav-source/selector</property>
+						<value>2</value>
+					</equals>
+				</visible>
+			</text>
+		</group>
+
 		<text>
 			<row>1</row>
 			<col>1</col>
