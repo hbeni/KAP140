@@ -770,18 +770,20 @@ We have captured the localizer and the GS.
                 </or>
                 <greater-than>
                     <expression>
-                        <product>
-                            <abs><property>autopilot/internal/vert-speed-fpm</property></abs>
-                            <value>0.2</value>
-                        </product>
+                        <abs>
+                            <property>autopilot/internal/target-climb-rate</property>
+                        </abs>
                     </expression>
                     <expression>
-                        <abs>
-                            <dif>
-                                <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
-                            </dif>
-                        </abs>
+                        <product>
+                            <abs>
+                                <dif>
+                                    <property>autopilot/internal/target-altitude</property>
+                                    <property alias="/params/indicated-altitude-ft"/>
+                                </dif>
+                            </abs>
+                            <value alias="/params/vs-ratio"/>
+                        </product>
                     </expression>
                 </greater-than>
             </condition>
@@ -1459,20 +1461,20 @@ We have captured the localizer and the GS.
                 </equals>
                 <greater-than>
                     <expression>
-                        <product>
-                            <abs>
-                                <property>autopilot/internal/vert-speed-fpm</property>
-                            </abs>
-                            <value>0.2</value>
-                        </product>
+                        <abs>
+                            <property>autopilot/internal/target-climb-rate</property>
+                        </abs>
                     </expression>
                     <expression>
-                        <abs>
-                            <dif>
-                                <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
-                            </dif>
-                        </abs>
+                        <product>
+                            <abs>
+                                <dif>
+                                    <property>autopilot/internal/target-altitude</property>
+                                    <property alias="/params/indicated-altitude-ft"/>
+                                </dif>
+                            </abs>
+                            <value alias="/params/vs-ratio"/>
+                        </product>
                     </expression>
                 </greater-than>
             </condition>
@@ -1480,7 +1482,7 @@ We have captured the localizer and the GS.
         <input>
             <condition>
                 <less-than>
-                    <property alias="../../../../../params/indicated-altitude-ft"/>
+                    <property alias="/params/indicated-altitude-ft"/>
                     <property>autopilot/internal/target-altitude</property>
                 </less-than>
             </condition>
@@ -1490,9 +1492,10 @@ We have captured the localizer and the GS.
                         <product>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
-                            <value>0.05</value>
+                            <value alias="/params/vs-ratio"/>
+                            <value>0.01</value>
                         </product>
                     </ceil>
                     <value>100</value>
@@ -1506,9 +1509,10 @@ We have captured the localizer and the GS.
                         <product>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
-                            <value>0.05</value>
+                            <value alias="/params/vs-ratio"/>
+                            <value>0.01</value>
                         </product>
                     </floor>
                     <value>100</value>

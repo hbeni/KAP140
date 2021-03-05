@@ -59,6 +59,12 @@
     <autotrim-pitch>autopilot/kap140/config/autotrim-pitch</autotrim-pitch>
 
 <!--
+    vs-ratio
+    Thats the radio how the AP slow down the VS if it comes closer to the preselected altitude
+-->
+    <vs-ratio>4.0</vs-ratio>
+
+<!--
     Gain tuning
     Adjust if the default values do not behave well for a certain FDM
 -->

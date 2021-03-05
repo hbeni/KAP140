@@ -63,11 +63,11 @@ Include the KAP 140 in your aircraft:
 
 - open the file 'nav-selector-config.xml' and configure your setup
 
-- add the file 'kap140-proprules.xml' as property rule under '<sim> … <systems>' in your set-file
+- add the file 'nav-selector.xml' as autopilot under '<sim> … <systems>' in your set-file
 
-- add the file 'nav-selector.xml' as property rule under '<sim> … <systems>' in your set-file
+- add the file 'kap140-proprules.xml' as autopilot under '<sim> … <systems>' in your set-file
 
-- add the file 'kap140-autopilot.xml' as autopilot under '<sim> … <systems>' in your set-file
+- add the file 'kap140-autopilot.xml' as property rule under '<sim> … <systems>' in your set-file
 
 - add the following lines under '<sim>' in your set-file:
 
