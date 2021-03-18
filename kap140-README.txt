@@ -1,4 +1,4 @@
-The Bendix/King KAP 140 (version 1.0)
+The Bendix/King KAP 140 (version 1.1)
 -------------------------------------
 
 This implementation is build according to the user manual.
@@ -67,7 +67,7 @@ Include the KAP 140 in your aircraft:
 
 - add the file 'kap140-proprules.xml' as autopilot under '<sim> … <systems>' in your set-file
 
-- add the file 'kap140-autopilot.xml' as property rule under '<sim> … <systems>' in your set-file
+- add the file 'kap140-autopilot.xml' as autopilot under '<sim> … <systems>' in your set-file
 
 - add the following lines under '<sim>' in your set-file:
 
@@ -258,4 +258,4 @@ To use this feature, add the following lines to your keyboard.xml:
 Finish!
 Happy flying :)
 Sascha Reißner
-2019
+2021
