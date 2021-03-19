@@ -67,7 +67,7 @@ We have captured the localizer and the GS.
                             <expression>
                                 <abs><property>autopilot/kap140/servo/roll-servo/force</property></abs>
                             </expression>
-                            <value>5</value> <!-- TODO: meaningfull force -->
+                            <value alias="/params/roll-servo-force-max"/>
                         </greater-than>
                     </and>
                 </or>
@@ -95,7 +95,7 @@ We have captured the localizer and the GS.
                             <expression>
                                 <abs><property>autopilot/kap140/servo/pitch-servo/force</property></abs>
                             </expression>
-                            <value>5</value> <!-- TODO: meaningfull force -->
+                            <value alias="/params/pitch-servo-force-max"/>
                         </greater-than>
                     </and>
                 </or>
@@ -143,14 +143,14 @@ We have captured the localizer and the GS.
     <logic>
         <input>
             <or>
-                <greater-than>
-                    <property>accelerations/pilot-gdamped</property>
-                    <value>1.4</value>
-                </greater-than>
                 <less-than>
                     <property>accelerations/pilot-gdamped</property>
-                    <value>0.6</value>
+                    <value alias="/params/gforce-min"/>
                 </less-than>
+                <greater-than>
+                    <property>accelerations/pilot-gdamped</property>
+                    <value alias="/params/gforce-max"/>
+                </greater-than>
             </or>
         </input>
         <output>autopilot/kap140/sensors/excess-g-raw</output>
@@ -292,24 +292,6 @@ We have captured the localizer and the GS.
         <output>autopilot/kap140/servo/pitch-servo/check-timer</output>
     </filter>
 
-    <!--filter>
-        <name>teeest</name>
-        <type>gain</type>
-        <debug>false</debug>
-        <input>
-            <expression>
-                <mod>
-                    <product>
-                        <property>sim/time/elapsed-sec</property>
-                        <value>1.61803398875</value>
-                    </product>
-                    <value>1.0</value>
-                </mod>
-            </expression>
-        </input>
-        <output>autopilot/kap140/random</output>
-    </filter-->
-
 <!-- reset all if the AP has no power -->
     <filter>
         <name>unpowered</name>
@@ -319,10 +301,10 @@ We have captured the localizer and the GS.
             <condition>
                 <property>autopilot/kap140/powered</property>
                 <less-than>
-                    <property alias="../../../../../params/power-supplied"/>
+                    <property alias="/params/power-supplied"/>
                     <expression>
                         <product>
-                            <property alias="../../../../../../../params/power-nominal"/>
+                            <value alias="/params/power-nominal"/>
                             <value>0.7</value>
                         </product>
                     </expression>
@@ -377,7 +359,7 @@ We have captured the localizer and the GS.
                 <not><property>autopilot/kap140/panel/state</property></not>
             </condition>
         </enable>
-        <input alias="../../params/default-altitude"/>
+        <input alias="/params/default-altitude"/>
         <output>autopilot/internal/target-altitude</output>
     </filter>
 
@@ -389,11 +371,11 @@ We have captured the localizer and the GS.
         <enable>
             <condition>
                 <not><property>autopilot/kap140/panel/state</property></not>
-                <not><property alias="../../../../../params/baro-tied"/></not>
+                <not><value alias="/params/baro-tied"/></not>
             </condition>
         </enable>
         <input>29.92</input>
-        <output alias="../../params/baro-inhg"/>
+        <output alias="/params/baro-inhg"/>
     </filter>
 
 <!-- start the Pre-Flight-Test if the AP receive enough powered -->
@@ -405,10 +387,10 @@ We have captured the localizer and the GS.
             <condition>
                 <not><property>autopilot/kap140/powered</property></not>
                 <greater-than>
-                    <property alias="../../../../../params/power-supplied"/>
+                    <property alias="/params/power-supplied"/>
                     <expression>
                         <product>
-                            <property alias="../../../../../../../params/power-nominal"/>
+                            <value alias="/params/power-nominal"/>
                             <value>0.7</value>
                         </product>
                     </expression>
@@ -709,12 +691,10 @@ We have captured the localizer and the GS.
         <input>
             <condition>
                 <equals>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>3</value>
                 </equals>
-                <not>
-                    <property alias="../../../../../params/baro-tied"/>
-                </not>
+                <not><value alias="/params/baro-tied"/></not>
             </condition>
             <value>4</value>
         </input>
@@ -831,7 +811,7 @@ We have captured the localizer and the GS.
                 <or>
                     <and>
                         <equals>
-                            <property alias="../../../../../../../params/model"/>
+                            <value alias="/params/model"/>
                             <value>3</value>
                         </equals>
                         <less-than>
@@ -850,7 +830,7 @@ We have captured the localizer and the GS.
                     </and>
                     <and>
                         <equals>
-                            <property alias="../../../../../../../params/model"/>
+                            <value alias="/params/model"/>
                             <value>2</value>
                         </equals>
                         <equals>
@@ -865,7 +845,7 @@ We have captured the localizer and the GS.
         <input>
             <condition>
                 <equals>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>3</value>
                 </equals>
                 <or>
@@ -895,7 +875,7 @@ We have captured the localizer and the GS.
         <input>
             <condition>
                 <equals>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>3</value>
                 </equals>
                 <greater-than>
@@ -1027,7 +1007,7 @@ We have captured the localizer and the GS.
             <expression>
                 <sum>
                     <product>
-                        <property alias="../../../../../../params/baro-inhg"/>
+                        <property alias="/params/baro-inhg"/>
                         <value>1000</value>
                     </product>
                     <value>5</value>
@@ -1045,7 +1025,7 @@ We have captured the localizer and the GS.
                     <value>1</value>
                 </equals>
             </condition>
-            <property alias="../../../params/baro-hpa"/>
+            <property alias="/params/baro-hpa"/>
         </input>
         <output>autopilot/kap140/panel/digit</output>
     </filter>
@@ -1230,7 +1210,7 @@ We have captured the localizer and the GS.
                     <value>1</value>
                 </not-equals>
                 <greater-than>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>1</value>
                 </greater-than>
             </condition>
@@ -1255,7 +1235,7 @@ We have captured the localizer and the GS.
                     <value>0</value>
                 </equals>
                 <greater-than>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>1</value>
                 </greater-than>
             </condition>
@@ -1708,7 +1688,7 @@ We have captured the localizer and the GS.
             </condition>
         </enable>
         <input>
-            <property alias="../../../params/pressure-source"/>
+            <property alias="/params/pressure-source"/>
         </input>
         <output>autopilot/internal/target-pressure</output>
     </filter>
@@ -1964,7 +1944,7 @@ We have captured the localizer and the GS.
         <enable>
             <condition>
                 <greater-than>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>1</value>
                 </greater-than>
                 <equals>
@@ -1994,7 +1974,7 @@ We have captured the localizer and the GS.
         <enable>
             <condition>
                 <greater-than>
-                    <property alias="../../../../../params/model"/>
+                    <value alias="/params/model"/>
                     <value>1</value>
                 </greater-than>
                 <equals>
@@ -2188,7 +2168,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2197,7 +2177,7 @@ We have captured the localizer and the GS.
             </condition>
         </enable>
         <input>
-            <property alias="../../../params/pressure-source"/>
+            <property alias="/params/pressure-source"/>
         </input>
         <output>autopilot/internal/target-pressure</output>
     </filter>
@@ -2307,7 +2287,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2318,7 +2298,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2350,7 +2330,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2385,7 +2365,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2417,7 +2397,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2449,7 +2429,7 @@ We have captured the localizer and the GS.
                         <abs>
                             <dif>
                                 <property>autopilot/internal/target-altitude</property>
-                                <property alias="../../../../../../../../params/indicated-altitude-ft"/>
+                                <property alias="/params/indicated-altitude-ft"/>
                             </dif>
                         </abs>
                     </expression>
@@ -2758,7 +2738,7 @@ We have captured the localizer and the GS.
                     <property>instrumentation/nav-source/signal-valid</property>
                 </and>
                 <and>
-                    <not><property alias="../../../../../../params/hsi-installed" /></not>
+                    <not><property alias="/params/hsi-installed" /></not>
                     <equals>
                         <property>/autopilot/kap140/settings/lateral-arm</property>
                         <value>3</value>
@@ -2797,7 +2777,7 @@ We have captured the localizer and the GS.
                     <property>instrumentation/nav-source/signal-valid</property>
                 </and>
                 <and>
-                    <not><property alias="../../../../../../params/hsi-installed" /></not>
+                    <not><property alias="/params/hsi-installed" /></not>
                     <equals>
                         <property>/autopilot/kap140/settings/lateral-arm</property>
                         <value>4</value>
@@ -2836,7 +2816,7 @@ We have captured the localizer and the GS.
                     <property>instrumentation/nav-source/signal-valid</property>
                 </and>
                 <and>
-                    <not><property alias="../../../../../../params/hsi-installed" /></not>
+                    <not><property alias="/params/hsi-installed" /></not>
                     <equals>
                         <property>/autopilot/kap140/settings/lateral-arm</property>
                         <value>5</value>
@@ -2863,7 +2843,7 @@ We have captured the localizer and the GS.
     <logic>
         <input>
             <greater-than>
-                <property>/autopilot/kap140/config/model</property>
+                <value alias="/params/model" />
                 <value>1</value>
             </greater-than>
             <equals>

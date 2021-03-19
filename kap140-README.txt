@@ -1,4 +1,4 @@
-The Bendix/King KAP 140 (version 1.1)
+The Bendix/King KAP 140 (version 1.2)
 -------------------------------------
 
 This implementation is build according to the user manual.
@@ -11,6 +11,9 @@ Configure the nav-selector in nav-selector-config.xml.
 This enables you to use up to three navigation sources (nav radios, rnav devices, GPS, etc...).
 You can bind buttons or a switch to change '/instrumentation/nav-source/selector' to 0, 1 or 2.
 If you only have one source, configure only the first and avoid a switch or button in the cockpit.
+The nav-selector is only a bunch of filters to push all information to one location.
+The AP navigate according to the information under '/instrumentation/nav-source'.
+From the AP point of view it doesnt matter where the information came from.
 
 If the KAP140 isn't tied with a altimeter, the standard pressure will flash after Pre Flight Test (PFT) is finished.
 As long as the standard pressure is flashing, the autopilot can't be activated!
@@ -34,7 +37,7 @@ If the KAP140 is in NAV, APR or REV mode and the deviation needle move more then
 the mode starts flashing. The autopilot will try to come back on the right track.
 If the autopilot isn't back in the next 30 seconds, it automatically disengage.
 
-If the autopilot is in VS mode, one press on UP or DOWN button switch the display to show the actual FPM without altering.
+If the autopilot is in VS mode, one press on UP or DOWN button change the display to show the actual FPM without altering.
 Every press on the UP or DOWN button while the FPM is shown in the display, will alter the rate by 100fpm.
 If you press and hold the UP or DOWN button, the rate will be changed by around 300fpm per second.
 
@@ -42,19 +45,23 @@ If the autopilot is in ALT mode, the UP and DOWN button set the holding altitude
 If you press and hold the UP or DOWN button, the autopilot command a climb/descend with 500fpm.
 Immediately as you release the button, the autopilot catch the new pressure altitude.
 
-!!! Caution !!!
-The 'kap140-autopilot.xml' is only a example to show how the control loops should work.
-It is important to replace the filter and controller with your own.
-Make sure your filter and controller check the right properties.
+The 'kap140-autopilot.xml' is completely reworked by Joshua Davidson aka Octal450 (big thanks for this great control loops).
 
 
 Include the KAP 140 in your aircraft:
 -------------------------------------
 
 - copy the 'kap140' directory inside your aircraft tree
-    (as example to 'Models/Interior/Panel/Instruments/')
+    (as example to 'Models/Interior/Instruments/')
+
+- rename one of the texture files to 'kap140.png' (actually there is a dark and a bright texture)
 
 - add the 'kap140.xml' to your panel (like every other model)
+    you can set some effects in the file 'kap140.xml'
+    there is a group 'annunciators' to change the display brightness
+    there is also a group 'buttons' for animating avionic lights
+    Important! there are two objects ('glass' and 'base-sensor')
+    make sure this two objects have a transparent effect!
 
 - if your aircraft hasn't a encoding altimeter, add a 'altimeter' in your instrumentation
     (under <sim> … <instrumentation>)
@@ -64,107 +71,42 @@ Include the KAP 140 in your aircraft:
 - open the file 'nav-selector-config.xml' and configure your setup
 
 - add the file 'nav-selector.xml' as autopilot under '<sim> … <systems>' in your set-file
+    as example:
 
-- add the file 'kap140-proprules.xml' as autopilot under '<sim> … <systems>' in your set-file
+        <autopilot n="3">
+            <name>NAV-selector</name>
+            <path>Models/Interior/Instruments/kap140/nav-selector.xml</path>
+        </autopilot>
 
 - add the file 'kap140-autopilot.xml' as autopilot under '<sim> … <systems>' in your set-file
+    as example:
 
-- add the following lines under '<sim>' in your set-file:
+        <autopilot n="4">
+            <name>KAP140-autopilot</name>
+            <path>Systems/kap140-autopilot.xml</path>
+        </autopilot>
 
-<!-- kap140 begin -->
-  <autopilot>
-    <internal>
-      <target-climb-rate type="int">0</target-climb-rate>
-      <target-altitude type="int">0</target-altitude>
-      <target-pressure type="double">0.0</target-pressure>
-      <target-roll-deg type="double">0.0</target-roll-deg>
-      <logic>
-        <roll-active type="bool">false</roll-active>
-        <hdg-active type="bool">false</hdg-active>
-        <nav-active type="bool">false</nav-active>
-        <apr-active type="bool">false</apr-active>
-        <rev-active type="bool">false</rev-active>
-        <pitch-active type="bool">false</pitch-active>
-        <alt-active type="bool">false</alt-active>
-        <gs-active type="bool">false</gs-active>
-      </logic>
-    </internal>
-    <kap140>
-      <serviceable type="bool">true</serviceable>
-      <powered type="bool">false</powered>
-      <programmed type="bool">true</programmed>
-      <roll-axis-fail type="bool">false</roll-axis-fail>
-      <pitch-axis-fail type="bool">false</pitch-axis-fail>
-      <bad-condition type="bool">false</bad-condition>
-<!-- configure the KAP 140 as you like it, for description see kap140-config.xml -->
-      <config>
-        <model type="int">3</model>
-        <power type="double">24.0</power>
-        <hsi-installed type="bool">true</hsi-installed>
-        <default-altitude type="int">4500</default-altitude>
-        <baro-tied type="bool">true</baro-tied>
-        <gain-roll type="double">1.4</gain-roll>
-        <gain-pitch type="double">0.7</gain-pitch>
-        <autotrim-pitch type="bool">true</autotrim-pitch>
-      </config>
-      <panel>
-        <state type="int">0</state>
-        <state-old type="int">0</state-old>
-        <alt-alert type="double">0.0</alt-alert>
-        <alt-alert-arm type="double">0.0</alt-alert-arm>
-        <alt-alert-sound type="bool">false</alt-alert-sound>
-        <ap-timer type="double">0.0</ap-timer>
-        <button-ap type="double">0.0</button-ap>
-        <button-up type="double">0.0</button-up>
-        <button-down type="double">0.0</button-down>
-        <baro-button type="double">0.0</baro-button>
-        <baro-timer type="double">0.0</baro-timer>
-        <baro-mode type="int">0</baro-mode>
-        <baro-mode-old type="int">0</baro-mode-old>
-        <digit type="int">0</digit>
-        <digit-mode type="int">0</digit-mode>
-        <digit-timer type="double">0.0</digit-timer>
-        <fpm-timer type="double">0.0</fpm-timer>
-        <hdg-timer type="double">0.0</hdg-timer>
-        <pft-1 type="double">0.0</pft-1>
-        <pft-2 type="double">0.0</pft-2>
-        <pft-3 type="double">0.0</pft-3>
-        <pt-up type="bool">false</pt-up>
-        <pt-down type="bool">false</pt-down>
-      </panel>
-      <sensors>
-        <elevator-trim type="double">0.0</elevator-trim>
-        <pitch-up type="double">0.0</pitch-up>
-        <pitch-down type="double">0.0</pitch-down>
-        <pitch-trim type="double">0.0</pitch-trim>
-        <!--pitch-force type="double">0.0</pitch-force-->
-        <!--roll-force type="double">0.0</roll-force-->
-      </sensors>
-      <servo>
-        <aileron type="double">0.0</aileron>
-        <aileron-rate type="double">0.0</aileron-rate>
-        <elevator type="double">0.0</elevator>
-        <elevator-rate type="double">0.0</elevator-rate>
-        <roll-servo>
-          <serviceable type="bool">true</serviceable>
-        </roll-servo>
-        <pitch-servo>
-          <serviceable type="bool">true</serviceable>
-        </pitch-servo>
-        <elevator-trim-servo>
-          <serviceable type="bool">true</serviceable>
-        </elevator-trim-servo>
-      </servo>
-      <settings>
-        <cws type="bool">false</cws>
-        <lateral-mode type="int">0</lateral-mode>
-        <lateral-arm type="int">0</lateral-arm>
-        <vertical-mode type="int">0</vertical-mode>
-        <vertical-arm type="int">0</vertical-arm>
-      </settings>
-    </kap140>
-  </autopilot>
-<!-- kap140 end -->
+- add the file 'kap140-proprules.xml' as property-rule under '<sim> … <systems>' in your set-file
+    as example:
+
+        <property-rule n="100">
+            <name>KAP140-control</name>
+            <path>Models/Interior/Instruments/kap140/kap140-proprules.xml</path>
+        </property-rule>
+
+- include the file 'kap140-properties.xml' under '<sim> … <autopilot>' in your set-file
+    as example if you dont have a autopilot section:
+
+        <autopilot include="Models/Interior/Instruments/kap140/kap140-properties.xml"/>
+
+    if you already have a autopilot section, add it this way:
+
+        <autopilot include="Models/Interior/Instruments/kap140/kap140-properties.xml">
+            …
+        <autopilot/>
+
+Important: the files 'kap140-autopilot.xml', 'kap140-proprules.xml' and 'kap140.xml' have a 'include' clause!
+make sure that this files can find 'kap140-config.xml' (change the 'include' clause if necessary).
 
 - move the sound files (kap140-alert.wav and kap140-disengage.wav) in your sound directory
 
@@ -206,35 +148,47 @@ Include the KAP 140 in your aircraft:
     </kap140-alert>
 <!-- kap140-sound end -->
 
-- add the following lines under '<sim> … <instrumentation>' in your set-file:
 
-<!-- nav-selector begin -->
-    <nav-source>
-      <selector type="int">0</selector>
-      <watchdog type="double">0.0</watchdog>
-      <signal-valid type="bool">false</signal-valid>
-      <in-range type="bool">false</in-range>
-      <from-flag type="bool">false</from-flag>
-      <to-flag type="bool">false</to-flag>
-      <nav-loc type="bool">false</nav-loc>
-      <has-gs type="bool">false</has-gs>
-      <gs-in-range type="bool">false</gs-in-range>
-      <gs-rate-of-climb type="double">0.0</gs-rate-of-climb>
-      <gs-rate-of-climb-fpm type="double">0.0</gs-rate-of-climb-fpm>
-      <heading-needle-deflection type="double">0.0</heading-needle-deflection>
-      <heading-needle-deflection-norm type="double">0.0</heading-needle-deflection-norm>
-      <gs-needle-deflection type="double">0.0</gs-needle-deflection>
-      <selected-radial-deg type="double">0.0</selected-radial-deg>
-      <target-radial-deg type="double">0.0</target-radial-deg>
-      <course-error type="double">0.0</course-error>
-    </nav-source>
-<!-- nav-selector end -->
+
+- move the file 'kap140-dlg.xml' in to '/gui/dialogs/'
+    If you dont have this directories, create it.
+    Dialogs must be in this directory, otherwise FG can not find it.
+
+
+
+- include the file 'nav-selector-properties.xml' under '<sim> … <instrumentation>' in your set-file
+    as example if you dont have a 'instrumentation' section:
+
+        <instrumentation include="Models/Interior/Instruments/kap140/nav-selector-properties.xml"/>
+
+    if you already have a 'instrumentation' section, add it this way:
+
+        <instrumentation include="Models/Interior/Instruments/kap140/nav-selector-properties.xml">
+            …
+        <instrumentation/>
+
+
+
+You can disengage the KAP140 by keypress (AP disconnect).
+
+<!-- KAP140 disconnect begin -->
+  <key n="100"> <!-- set a proper key -->
+    <desc>KAP140 disconnect</desc>
+    <binding>
+      <command>property-assign</command>
+      <property>autopilot/kap140/settings/ap-disc</property>
+      <value>1</value>
+    </binding>
+  </key>
+<!-- KAP140 disconnect end -->
+
+
 
 The KAP140 support CWS (Control Wheel Steering).
 To use this feature, add the following lines to your keyboard.xml:
 
 <!-- CWS begin -->
-  <key n="99">
+  <key n="99"> <!-- set a proper key -->
     <desc>Control Wheel Steering (CWS)</desc>
     <binding>
       <command>property-assign</command>
@@ -250,8 +204,6 @@ To use this feature, add the following lines to your keyboard.xml:
     </mod-up>
   </key>
 <!-- CWS end -->
-
-
 
 
 
