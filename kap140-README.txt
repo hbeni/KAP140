@@ -1,4 +1,4 @@
-The Bendix/King KAP 140 (version 1.2)
+The Bendix/King KAP 140 (version 1.3)
 -------------------------------------
 
 This implementation is build according to the user manual.

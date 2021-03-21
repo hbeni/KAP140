@@ -371,7 +371,7 @@ We have captured the localizer and the GS.
         <enable>
             <condition>
                 <not><property>autopilot/kap140/panel/state</property></not>
-                <not><value alias="/params/baro-tied"/></not>
+                <not><property alias="/params/baro-tied"/></not>
             </condition>
         </enable>
         <input>29.92</input>
@@ -694,7 +694,7 @@ We have captured the localizer and the GS.
                     <value alias="/params/model"/>
                     <value>3</value>
                 </equals>
-                <not><value alias="/params/baro-tied"/></not>
+                <not><property alias="/params/baro-tied"/></not>
             </condition>
             <value>4</value>
         </input>
