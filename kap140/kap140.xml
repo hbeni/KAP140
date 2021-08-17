@@ -160,6 +160,7 @@
             <blue>  0 </blue>
         </shininess>
     </animation>
+
     <animation>
         <type>material</type>
         <object-name>buttons</object-name>
