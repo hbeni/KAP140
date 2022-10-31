@@ -639,7 +639,7 @@
     <object-name>ann-ap-act</object-name>
     <name>AP Anunciator</name>
     <condition>
-      <not><property>autopilot/kap140/settings/cws</property></not>
+      <not><property>autopilot/kap140/event/button-cws</property></not>
     </condition>
   </animation>
 
