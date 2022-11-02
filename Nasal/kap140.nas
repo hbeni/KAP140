@@ -218,7 +218,6 @@ setlistener(kap140_down, func(down) {
     if (down.getBoolValue()) {
         setprop("autopilot/kap140/panel/button-down", getprop("sim/time/elapsed-sec"));
         if (getprop("autopilot/kap140/panel/state") == 6) {
-            setprop("autopilot/kap140/panel/fpm-old", getprop("autopilot/internal/target-climb-rate"));
             if (getprop("autopilot/kap140/settings/vertical-mode") == 1 and
                 getprop("autopilot/kap140/panel/fpm-timer") > 0)
             {
@@ -232,6 +231,7 @@ setlistener(kap140_down, func(down) {
                 if (pressure > 35.0) pressure = 35.0;
                 setprop("autopilot/internal/target-pressure", pressure);
             }
+            setprop("autopilot/kap140/panel/fpm-old", getprop("autopilot/internal/target-climb-rate"));
         }
     }
     else
@@ -252,7 +252,6 @@ setlistener(kap140_up, func(up) {
     if (up.getBoolValue()) {
         setprop("autopilot/kap140/panel/button-up", getprop("sim/time/elapsed-sec"));
         if (getprop("autopilot/kap140/panel/state") == 6) {
-            setprop("autopilot/kap140/panel/fpm-old", getprop("autopilot/internal/target-climb-rate"));
             if (getprop("autopilot/kap140/settings/vertical-mode") == 1 and
                 getprop("autopilot/kap140/panel/fpm-timer") > 0)
             {
@@ -266,6 +265,7 @@ setlistener(kap140_up, func(up) {
                 if (pressure < 5.0) pressure = 5.0;
                 setprop("autopilot/internal/target-pressure", pressure);
             }
+            setprop("autopilot/kap140/panel/fpm-old", getprop("autopilot/internal/target-climb-rate"));
         }
     }
     else
